@@ -49,7 +49,16 @@ public class Database {
 	}
 
 	public String getRawMaterials(Request req, Response res) {
-		return "{}";
+		String rawMaterials = "{}";
+		try {
+			PreparedStatement preparedStatement =
+					connection.prepareStatement("select raw_material_name, amount, unit  from RawMaterials");
+			rawMaterials = toJson(preparedStatement.executeQuery(), "raw-materials");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rawMaterials;
 	}
 
 	public String getCookies(Request req, Response res) {
