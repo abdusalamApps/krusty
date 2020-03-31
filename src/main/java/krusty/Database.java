@@ -45,6 +45,7 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println(customers);
 		return customers;
 	}
 
@@ -58,11 +59,40 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println(rawMaterials);
 		return rawMaterials;
 	}
 
+	public static void main(String[] args) {
+		try {
+			connection = DriverManager.getConnection(jdbcString, jdbcUsername, jdbcPassword);
+
+		} catch (SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLState: " + ex.getSQLState());
+			System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		String rawMaterials = "{}";
+		try {
+			PreparedStatement preparedStatement =
+					connection.prepareStatement("select raw_material_name, amount, unit  from RawMaterials");
+			rawMaterials = toJson(preparedStatement.executeQuery(), "raw-materials");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println(rawMaterials);
+	}
+
 	public String getCookies(Request req, Response res) {
-		return "{\"cookies\":[]}";
+		String cookies = "{}";
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from Cookies");
+			cookies = toJson(preparedStatement.executeQuery(), "cookies");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cookies;
 	}
 
 	public String getRecipes(Request req, Response res) {

@@ -1,4 +1,4 @@
-INSERT into Customers(customer_name, address)
+INSERT into Customers(name, address)
 VALUES ('Bjudkakor AB', 'Ystad'),
        ('Finkakor AB', 'Helsingborg'),
        ('Gästkakor AB', 'Hässleholm'),
@@ -7,7 +7,7 @@ VALUES ('Bjudkakor AB', 'Ystad'),
        ('Partykakor AB', 'Kristianstad'),
        ('Skånekakor AB', 'Perstorp');
 
-INSERT into Cookies(cookie_name)
+INSERT into Cookies(name)
 VALUES ('Amneris'),
        ('Berliner'),
        ('Nut cookie'),
@@ -15,7 +15,7 @@ VALUES ('Amneris'),
        ('Tango'),
        ('Almond delight');
 
-INSERT into RawMaterials(raw_material_name, amount, unit, last_bought_date, last_bought_amount)
+INSERT into RawMaterials(name, amount, unit, last_bought_date, last_bought_amount)
 VALUES ('Bread crumbs', 500000, 'g', UNIX_TIMESTAMP(), 500000),
        ('Butter', 500000, 'g', UNIX_TIMESTAMP(), 500000),
        ('Chocolate', 500000, 'g', UNIX_TIMESTAMP(), 500000),
