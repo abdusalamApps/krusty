@@ -11,4 +11,4 @@ create table Pallets
     blocked        bool,
     location       varchar(50),
     delivered_date long
-)
+);
