@@ -1,4 +1,4 @@
-INSERT into Customers(name, address) VALUES
+INSERT into Customers(customer_name, address) VALUES
 ('Bjudkakor AB','Ystad'),
 ('Finkakor AB','Helsingborg'),
 ('Gästkakor AB','Hässleholm'),
@@ -7,7 +7,7 @@ INSERT into Customers(name, address) VALUES
 ('Partykakor AB','Kristianstad'),
 ('Skånekakor AB','Perstorp');
 
-INSERT into Cookies(name) VALUES
+INSERT into Cookies(cookie_name) VALUES
 ('Amneris'),
 ('Berliner'),
 ('Nut cookie'),

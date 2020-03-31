@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/src/create-schema.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/initial-data.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/krusty/Database.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/reset.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/queries.sql" dialect="MySQL" />
   </component>
 </project>
