@@ -53,36 +53,15 @@ public class Database {
 		String rawMaterials = "{}";
 		try {
 			PreparedStatement preparedStatement =
-					connection.prepareStatement("select raw_material_name, amount, unit  from RawMaterials");
+					connection.prepareStatement("select name, amount, unit  from RawMaterials");
 			rawMaterials = toJson(preparedStatement.executeQuery(), "raw-materials");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println(rawMaterials);
 		return rawMaterials;
 	}
 
-	public static void main(String[] args) {
-		try {
-			connection = DriverManager.getConnection(jdbcString, jdbcUsername, jdbcPassword);
-
-		} catch (SQLException ex) {
-			System.out.println("SQLException: " + ex.getMessage());
-			System.out.println("SQLState: " + ex.getSQLState());
-			System.out.println("VendorError: " + ex.getErrorCode());
-		}
-		String rawMaterials = "{}";
-		try {
-			PreparedStatement preparedStatement =
-					connection.prepareStatement("select raw_material_name, amount, unit  from RawMaterials");
-			rawMaterials = toJson(preparedStatement.executeQuery(), "raw-materials");
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		System.out.println(rawMaterials);
-	}
 
 	public String getCookies(Request req, Response res) {
 		String cookies = "{}";
