@@ -11,8 +11,8 @@ set foreign_key_checks = 1;
 
 create table Customers
 (
-    name varchar(30) primary key,
-    address       varchar(100)
+    name    varchar(30) primary key,
+    address varchar(100)
 );
 
 create table Orders
@@ -43,7 +43,7 @@ create table Pallets
 
 create table RawMaterials
 (
-    name  varchar(30) primary key not null,
+    name               varchar(30) primary key not null,
     amount             int                     not null check ( amount >= 0 ),
     unit               varchar(10)             not null,
     last_bought_date   long                    not null,
@@ -53,9 +53,9 @@ create table RawMaterials
 create table Recipes
 (
     raw_material varchar(30),
-    cookie_name       varchar(30),
-    amount            integer     not null check ( amount > 0 ),
-    unit              varchar(30) not null,
+    cookie_name  varchar(30),
+    amount       integer     not null check ( amount > 0 ),
+    unit         varchar(30) not null,
     foreign key (raw_material) references RawMaterials (name),
     foreign key (cookie_name) references Cookies (name),
     primary key (raw_material, cookie_name)

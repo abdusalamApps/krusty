@@ -5,7 +5,8 @@ VALUES ('Bjudkakor AB', 'Ystad'),
        ('Kaffebröd AB', 'Landskrona'),
        ('Kalaskakor AB', 'Trelleborg'),
        ('Partykakor AB', 'Kristianstad'),
-       ('Skånekakor AB', 'Perstorp');
+       ('Skånekakor AB', 'Perstorp'),
+       ('Småbröd AB', 'Malmö');
 
 INSERT into Cookies(name)
 VALUES ('Amneris'),

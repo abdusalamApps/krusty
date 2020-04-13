@@ -15,11 +15,11 @@ public class Database {
 	/**
 	 * Modify it to fit your environment and then use this string when connecting to your database!
 	 */
-	private static final String jdbcString = "jdbc:mysql://35.228.254.209/krusty";
+	private static final String jdbcString = "jdbc:mysql://puccini.cs.lth.se/hbg05";
 
 	// For use with MySQL or PostgreSQL
-	private static final String jdbcUsername = "abdo";
-	private static final String jdbcPassword = "";
+	private static final String jdbcUsername = "hbg05";
+	private static final String jdbcPassword = "fpz731gw";
 
 	private static Connection connection;
 
