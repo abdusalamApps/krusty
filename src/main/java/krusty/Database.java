@@ -75,7 +75,14 @@ public class Database {
 	}
 
 	public String getRecipes(Request req, Response res) {
-		return "{}";
+		String recepies = "{}";
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from Recepies");
+			cookies = toJson(preparedStatement.executeQuery(), "recepies");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return recepies;
 	}
 
 	public String getPallets(Request req, Response res) {
