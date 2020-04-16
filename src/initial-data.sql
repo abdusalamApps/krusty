@@ -36,3 +36,72 @@ VALUES ('Bread crumbs', 500000, 'g', UNIX_TIMESTAMP(), 500000),
        ('Vanilla', 500000, 'g', UNIX_TIMESTAMP(), 500000),
        ('Vanilla sugar', 500000, 'g', UNIX_TIMESTAMP(), 500000),
        ('Wheat flour', 500000, 'g', UNIX_TIMESTAMP(), 500000);
+
+
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Almond delight', 'Butter', 400, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Almond delight', 'Chopped almonds', 279, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Almond delight', 'Cinnamon', 10, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Almond delight', 'Flour', 400, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Almond delight', 'Sugar', 270, 'g');
+
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Amneris', 'Butter', 250, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Amneris', 'Eggs', 250, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Amneris', 'Marzipan', 750, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Amneris', 'Potato starch', 25, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Amneris', 'Wheat flour', 25, 'g');
+
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Berliner', 'Butter', 250, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Berliner', 'Chocolate', 50, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Berliner', 'Eggs', 50, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Berliner', 'Flour', 350, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Berliner', 'Icing sugar', 100, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Berliner', 'Vanilla sugar', 5, 'g');
+
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Nut cookie', 'Bread crumbs', 125, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Nut cookie', 'Chocolate', 50, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Nut cookie', 'Egg whites', 350, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Nut cookie', 'Fine-ground nuts', 750, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Nut cookie', 'Ground, roasted nuts ', 625, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Nut cookie', 'Sugar', 375, 'g');
+
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Nut ring', 'Butter', 450, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Nut ring', 'Flour', 450, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Nut ring', 'Icing sugar', 190, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Nut ring', 'Roasted, chopped nuts', 225, 'g');
+
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Tango', 'Butter', 200, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Tango', 'Flour', 300, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Tango', 'Sodium bicarbonate', 4, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Tango', 'Sugar', 250, 'g');
+insert into Recipes (cookie_name, raw_material, amount, unit)
+values ('Tango', 'Vanilla', 2, 'g');
