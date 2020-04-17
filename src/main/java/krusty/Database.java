@@ -32,7 +32,7 @@ public class Database {
 
 	private static Connection connection;
 	
-	private static final int cookiesPerPallet = 15*10*36;
+	private static final int cookiesPerPallet = (15*10*36)/100; //54
 	
 	public void connect() {
 		try {
