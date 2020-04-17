@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -33,7 +32,7 @@ public class Database {
 
 	private static Connection connection;
 	
-	private static final int palletSize = 30;
+	private static final int cookiesPerPallet = 15*10*36;
 	
 	public void connect() {
 		try {
@@ -158,7 +157,7 @@ public class Database {
 			}
 
 			// Finns det tillräckligt med ingrediensen på lager
-			if(materials.get(materialRequired)<recepie.get(materialRequired)*palletSize) {
+			if(materials.get(materialRequired)<recepie.get(materialRequired)* cookiesPerPallet) {
 				return "{}";
 			}
 		}
@@ -166,7 +165,7 @@ public class Database {
 		for(String materialRequired:recepie.keySet()) {
 			try {
 				PreparedStatement ps = connection.prepareStatement("UPDATE RawMaterials SET amount = amount - ? WHERE name = ?");
-				ps.setInt(1, recepie.get(materialRequired)*palletSize);
+				ps.setInt(1, recepie.get(materialRequired)* cookiesPerPallet);
 				ps.setString(2, materialRequired);
 				ps.executeUpdate();
 			} catch (SQLException e) {

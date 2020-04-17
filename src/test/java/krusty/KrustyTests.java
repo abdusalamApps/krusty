@@ -149,7 +149,7 @@ public class KrustyTests {
 	protected String createPallet(String cookie) {
 		try {
 			HttpResponse<String> res =  Unirest.post(BASE_URL + "pallets")
-					.queryString("cookie_name",  cookie)
+					.queryString("cookie",  cookie)
 					.asString();
 			return res.getBody();
 		} catch (UnirestException e) {
