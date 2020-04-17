@@ -34,28 +34,28 @@ public class KrustyTests {
 	 *
 	 */
 	@Test
-	public void test01Customers() throws JSONException {
+	public void test01Customers() throws JSONException { // Klar
 		String expected = readFile("ExpectedCustomers.json");
 		String actual = getURL("customers");
 		JSONAssert.assertEquals(expected, actual, false);
 	}
 	
 	@Test
-	public void test02Cookies() throws JSONException {
+	public void test02Cookies() throws JSONException { // Klar
 		String expected = readFile("ExpectedCookies.json");
 		String actual = getURL("cookies");
 		JSONAssert.assertEquals(expected, actual, false);
 	}
 
 	@Test
-	public void test03RawMaterials() throws JSONException {
+	public void test03RawMaterials() throws JSONException { // Klar
 		String expected = readFile("ExpectedRawMaterialsStart.json");
 		String actual = getURL("raw-materials");
 		JSONAssert.assertEquals(expected, actual, false);
 	}
 
 	@Test
-	public void test04CreatePallets() throws JSONException {
+	public void test04CreatePallets() throws JSONException { // Klar
 		createPallet("Nut ring");
 		createPallet("Nut ring");
 		createPallet("Tango");

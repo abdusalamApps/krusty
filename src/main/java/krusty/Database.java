@@ -87,7 +87,7 @@ public class Database {
 	public String getRecipes(Request req, Response res) {
 		String recepies = "{}";
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement("select * from Recepies");
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from Recipes");
 			recepies = toJson(preparedStatement.executeQuery(), "recepies");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -129,27 +129,35 @@ public class Database {
 
 	public String createPallet(Request req, Response res) {
 		/*
-		 * Se om cookie finns i databasen (bara för att vara säker) #
-		 * Hämta recept (dvs vilka ingredieser och mängden) #
-		 * Kolla så att råvarorna finns tillgängliga #
-		 * Subtrahera råvaror #
-		 * Skapa pallet i tabellen pallet 
-		 * 
+		 * 1) Se om cookie finns i databasen (bara för att vara säker) #
+		 * 2) Hämta recept (dvs vilka ingredieser och mängden) #
+		 * 3) Kolla så att råvarorna finns tillgängliga #
+		 * 4) Subtrahera råvaror #
+		 * 5) Skapa pallet i tabellen pallet
 		 */
-		String cookieName = req.params("cookie");
-		if(cookieName.length()>0) return "{}";
+		String cookieName = req.queryParams("cookie");
+		if(cookieName.length()==0) return "{}";
 		
 		if (!cookieExists(cookieName))
 			return "{}";
-		
-		Map<String, Integer> recepie = getRecepie(cookieName);
-		Map<String, Integer> materials = getMaterials((String[]) recepie.keySet().toArray());
+
+		//Hämtar recept
+		Map<String, Integer> recepie = getRecipe(cookieName);
+
+
+		//Hämtar vad som finns på lager
+		String[] materialArray = new String[recepie.keySet().size()];
+		recepie.keySet().toArray(materialArray);
+		Map<String, Integer> materials = getMaterials(materialArray);
 		
 		//Checking
 		for(String materialRequired:recepie.keySet()) {
+			// Finns ingrediensen överhuvudtaget
 			if(!materials.containsKey(materialRequired)) {
 				return "{}";
 			}
+
+			// Finns det tillräckligt med ingrediensen på lager
 			if(materials.get(materialRequired)<recepie.get(materialRequired)*palletSize) {
 				return "{}";
 			}
@@ -162,13 +170,20 @@ public class Database {
 				ps.setString(2, materialRequired);
 				ps.executeUpdate();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO Pallets(prod_date, blocked, location, delivered_date, order_id, cookie_name) VALUES (?,?,?,?,?,?,?)");
+			String sql = "INSERT INTO Pallets(prod_date, blocked, location, delivered_date, cookie_name) VALUES (?,?,?,?,?)";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setLong(1,System.currentTimeMillis());
+			ps.setBoolean(2, false);
+			ps.setString(3, "Krusty");
+			ps.setLong(4,System.currentTimeMillis() + 1000*60*60*24*(10)); //Tio dagar
+			ps.setString(5, cookieName);
+			ps.execute();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -199,11 +214,11 @@ public class Database {
 		}
 	}
 
-	private Map<String, Integer> getRecepie(String cookieName) {
+	private Map<String, Integer> getRecipe(String cookieName) {
 		Map<String, Integer> repecie = new HashMap<String, Integer>(); // Ingrediensnamnet och mängden
 		ResultSet result;
 		try {
-			PreparedStatement ps = connection.prepareStatement("select * from Recepies where cookie_name=?");
+			PreparedStatement ps = connection.prepareStatement("select * from Recipes where cookie_name=?");
 			ps.setString(1, cookieName);
 			result = ps.executeQuery();
 			while (result.next()) {
@@ -220,9 +235,19 @@ public class Database {
 		Map<String, Integer> materials = new HashMap<String, Integer>(); // Materialnamnet och mängden
 		ResultSet result;
 		try {
-			PreparedStatement ps = connection.prepareStatement("select * from RawMaterials where name in (?)");
-			Array array = connection.createArrayOf("VARCHAR", materialNames);
-			ps.setArray(1, array);
+			StringBuilder sb = new StringBuilder();
+			sb.append("select * from RawMaterials where name in (");
+			for(int i = 0;i<materialNames.length;i++){
+				sb.append("?");
+				if(i<materialNames.length-1) sb.append(",");
+			}
+			sb.append(")");
+
+			PreparedStatement ps = connection.prepareStatement(sb.toString());
+
+			for(int i = 0;i<materialNames.length;i++){
+				ps.setString(i+1, materialNames[i]);
+			}
 			result = ps.executeQuery();
 			while (result.next()) {
 				materials.put(result.getString("name"), result.getInt("amount"));
