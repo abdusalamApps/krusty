@@ -1,4 +1,5 @@
 set foreign_key_checks = 0;
+delete from Pallets;
 delete from Customers;
 insert into Customers (name, address) VALUES ('Bjudkakor AB', 'Ystad');
 insert into Customers (name, address) VALUES ('Finkakor AB', 'Helsingborg');
@@ -67,4 +68,12 @@ insert into Recipes (cookie_name, raw_material , amount ) values ('Tango' ,'Flou
 insert into Recipes (cookie_name, raw_material , amount ) values ('Tango' ,'Sodium bicarbonate' , 4 );
 insert into Recipes (cookie_name, raw_material , amount ) values ('Tango' ,'Sugar' , 250 );
 insert into Recipes (cookie_name, raw_material , amount ) values ('Tango' ,'Vanilla' , 2 );
+insert into Pallets (blocked, cookie_name) VALUES (false, 'Amneris');
+insert into Pallets (blocked, cookie_name) VALUES (false, 'Amneris');
+insert into Pallets (blocked, cookie_name) VALUES (false, 'Amneris');
+insert into Pallets (blocked, cookie_name) VALUES (false, 'Berliner');
+insert into Pallets (blocked, cookie_name) VALUES (false, 'Nut ring');
+insert into Pallets (blocked, cookie_name) VALUES (false, 'Nut ring');
+insert into Pallets (blocked, cookie_name) VALUES (false, 'Tango');
 set foreign_key_checks = 1;
+

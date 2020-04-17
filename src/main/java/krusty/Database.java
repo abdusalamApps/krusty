@@ -95,7 +95,53 @@ public class Database {
 	}
 
 	public String getPallets(Request req, Response res) {
-		return "{\"pallets\":[]}";
+
+		try {
+			StringBuilder sb = new StringBuilder();
+			sb.append("select pallet_id as id, cookie_name as cookie, prod_date as production_date, IF (blocked = 1, 'yes', 'no') as blocked\n" +
+					"from Pallets\n");
+
+			int counter = 0;
+			if (req.queryParams("from") != null || req.queryParams("to") != null || req.queryParams("cookie") != null || req.queryParams("blocked") != null) {
+				sb.append(" where ");
+			}
+			if (req.queryParams("from") != null) {
+				sb.append(" prod_date >= '").append(req.queryParams("from")).append("' ");
+				counter++;
+			}
+			if (req.queryParams("to") != null) {
+				if (counter != 0) {
+					sb.append(" and ");
+				}
+				sb.append(" prod_date <= '").append(req.queryParams("to")).append("' ");
+				counter++;
+			}
+			if (req.queryParams("cookie") != null) {
+				if (counter != 0) {
+					sb.append(" and ");
+				}
+				sb.append(" cookie_name= '").append(req.queryParams("cookie")).append("' ");
+				counter++;
+			}
+			if (req.queryParams("blocked") != null) {
+				if (counter != 0) {
+					sb.append(" and ");
+				}
+				if (req.queryParams("blocked").equals("yes")) {
+					sb.append(" blocked = 1 ");
+				} else {
+					sb.append(" blocked = 0 ");
+				}
+			}
+			sb.append(" order by  prod_date desc \n");
+
+			PreparedStatement stmt = connection.prepareStatement(sb.toString());
+			ResultSet rs = stmt.executeQuery();
+			return Jsonizer.toJson(rs, "pallets");
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public String reset(Request req, Response res) {
@@ -186,10 +232,6 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
 		
 		return "{}";
 	}
