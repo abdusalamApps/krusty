@@ -13,9 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
 
@@ -95,48 +95,48 @@ public class Database {
 	}
 
 	public String getPallets(Request req, Response res) {
+		Map<String, String> supportedFilters = new HashMap<String, String>();
+		supportedFilters.put("from", "prod_date >=");
+		supportedFilters.put("to", "prod_date <=");
+		supportedFilters.put("cookie", "cookie_name =");
+		supportedFilters.put("blocked", "blocked =");
 
 		try {
 			StringBuilder sb = new StringBuilder();
-			sb.append("select pallet_id as id, cookie_name as cookie, prod_date as production_date, IF (blocked = 1, 'yes', 'no') as blocked\n" +
-					"from Pallets\n");
+			sb.append("SELECT pallet_id AS id, cookie_name AS cookie, prod_date AS production_date, IF (blocked = 1, 'yes', 'no') AS blocked");
+			sb.append(" FROM Pallets ");
 
-			int counter = 0;
-			if (req.queryParams("from") != null || req.queryParams("to") != null || req.queryParams("cookie") != null || req.queryParams("blocked") != null) {
-				sb.append(" where ");
-			}
-			if (req.queryParams("from") != null) {
-				sb.append(" prod_date >= '").append(req.queryParams("from")).append("' ");
-				counter++;
-			}
-			if (req.queryParams("to") != null) {
-				if (counter != 0) {
-					sb.append(" and ");
-				}
-				sb.append(" prod_date <= '").append(req.queryParams("to")).append("' ");
-				counter++;
-			}
-			if (req.queryParams("cookie") != null) {
-				if (counter != 0) {
-					sb.append(" and ");
-				}
-				sb.append(" cookie_name= '").append(req.queryParams("cookie")).append("' ");
-				counter++;
-			}
-			if (req.queryParams("blocked") != null) {
-				if (counter != 0) {
-					sb.append(" and ");
-				}
-				if (req.queryParams("blocked").equals("yes")) {
-					sb.append(" blocked = 1 ");
-				} else {
-					sb.append(" blocked = 0 ");
-				}
-			}
-			sb.append(" order by  prod_date desc \n");
 
-			PreparedStatement stmt = connection.prepareStatement(sb.toString());
-			ResultSet rs = stmt.executeQuery();
+			Map<String,String[]> params = req.queryMap().toMap();
+			Iterator<String> paramIterator = params.keySet().iterator();
+			if(supportedFilters.keySet().stream().anyMatch(params.keySet()::contains))sb.append("WHERE "); // if contains any
+			while(paramIterator.hasNext()){
+				String key = paramIterator.next();
+				if(!supportedFilters.containsKey(key)) continue;
+
+				sb.append(supportedFilters.get(key)).append("? ");
+				if(paramIterator.hasNext()) sb.append(" and ");
+
+			}
+			sb.append("ORDER BY prod_date DESC");
+
+			PreparedStatement ps = connection.prepareStatement(sb.toString());
+
+			paramIterator = params.keySet().iterator();
+			int count = 1;
+			while(paramIterator.hasNext()){
+				String key = paramIterator.next();
+				if(!supportedFilters.containsKey(key)) continue;
+
+				String value;
+				if(key.equals("blocked")){
+					ps.setBoolean(count++, params.get(key)[0].equals("yes"));
+					continue;
+				}
+				ps.setString(count++, params.get(key)[0]);
+
+			}
+			ResultSet rs = ps.executeQuery();
 			return Jsonizer.toJson(rs, "pallets");
 
 		} catch (SQLException e) {
