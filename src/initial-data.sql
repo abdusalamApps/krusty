@@ -17,25 +17,25 @@ VALUES ('Amneris'),
        ('Almond delight');
 
 INSERT into RawMaterials(name, amount, unit, last_bought_date, last_bought_amount)
-VALUES ('Bread crumbs', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Butter', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Chocolate', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Chopped almonds', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Cinnamon', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Egg whites', 500000, 'ml', UNIX_TIMESTAMP(), 500000),
-       ('Eggs', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Fine-ground nuts', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Flour', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Ground, roasted nuts', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Icing sugar', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Marzipan', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Potato starch', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Roasted, chopped nuts', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Sodium bicarbonate', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Sugar', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Vanilla', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Vanilla sugar', 500000, 'g', UNIX_TIMESTAMP(), 500000),
-       ('Wheat flour', 500000, 'g', UNIX_TIMESTAMP(), 500000);
+VALUES ('Bread crumbs', 500000, 'g', curdate(), 500000),
+       ('Butter', 500000, 'g', curdate(), 500000),
+       ('Chocolate', 500000, 'g', curdate(), 500000),
+       ('Chopped almonds', 500000, 'g', curdate(), 500000),
+       ('Cinnamon', 500000, 'g', curdate(), 500000),
+       ('Egg whites', 500000, 'ml', curdate(), 500000),
+       ('Eggs', 500000, 'g', curdate(), 500000),
+       ('Fine-ground nuts', 500000, 'g', curdate(), 500000),
+       ('Flour', 500000, 'g', curdate(), 500000),
+       ('Ground, roasted nuts', 500000, 'g', curdate(), 500000),
+       ('Icing sugar', 500000, 'g', curdate(), 500000),
+       ('Marzipan', 500000, 'g', curdate(), 500000),
+       ('Potato starch', 500000, 'g', curdate(), 500000),
+       ('Roasted, chopped nuts', 500000, 'g', curdate(), 500000),
+       ('Sodium bicarbonate', 500000, 'g', curdate(), 500000),
+       ('Sugar', 500000, 'g', curdate(), 500000),
+       ('Vanilla', 500000, 'g', curdate(), 500000),
+       ('Vanilla sugar', 500000, 'g', curdate(), 500000),
+       ('Wheat flour', 500000, 'g', curdate(), 500000);
 
 insert into Recipes (cookie_name, raw_material , amount ) values ('Almond delight' ,'Butter' , 400 );
 insert into Recipes (cookie_name, raw_material , amount ) values ('Almond delight' ,'Chopped almonds' , 279 );
@@ -74,11 +74,11 @@ insert into Recipes (cookie_name, raw_material , amount ) values ('Tango' ,'Sodi
 insert into Recipes (cookie_name, raw_material , amount ) values ('Tango' ,'Sugar' , 250 );
 insert into Recipes (cookie_name, raw_material , amount ) values ('Tango' ,'Vanilla' , 2 );
 
-insert into Pallets (blocked, cookie_name) VALUES (false, 'Amneris');
-insert into Pallets (blocked, cookie_name) VALUES (false, 'Amneris');
-insert into Pallets (blocked, cookie_name) VALUES (false, 'Amneris');
-insert into Pallets (blocked, cookie_name) VALUES (false, 'Berliner');
-insert into Pallets (blocked, cookie_name) VALUES (false, 'Nut ring');
-insert into Pallets (blocked, cookie_name) VALUES (false, 'Nut ring');
-insert into Pallets (blocked, cookie_name) VALUES (false, 'Tango');
+insert into Pallets (blocked, prod_date, cookie_name) VALUES (false, curdate(), 'Amneris');
+insert into Pallets (blocked, prod_date,cookie_name) VALUES (false, curdate(), 'Amneris');
+insert into Pallets (blocked, prod_date,cookie_name) VALUES (false, curdate(), 'Amneris');
+insert into Pallets (blocked, prod_date,cookie_name) VALUES (false, curdate(), 'Berliner');
+insert into Pallets (blocked, prod_date,cookie_name) VALUES (false, curdate(), 'Nut ring');
+insert into Pallets (blocked, prod_date,cookie_name) VALUES (false, curdate(), 'Nut ring');
+insert into Pallets (blocked, prod_date,cookie_name) VALUES (false, curdate(), 'Tango');
 
