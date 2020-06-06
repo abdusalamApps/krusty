@@ -108,8 +108,8 @@ public class Database {
     public String getRecipes(Request req, Response res) {
         String recepies = "{}";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from Recipes");
-            recepies = toJson(preparedStatement.executeQuery(), "recepies");
+            PreparedStatement preparedStatement = connection.prepareStatement("select cookie_name, raw_material, amount, unit from Recipes order by cookie_name");
+            recepies = toJson(preparedStatement.executeQuery(), "recipes");
         } catch (SQLException e) {
             e.printStackTrace();
         }
