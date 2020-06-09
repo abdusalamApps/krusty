@@ -73,26 +73,6 @@ public class Database {
         return rawMaterials;
     }
 
-    public static void main(String[] args) {
-        try {
-            connection = DriverManager.getConnection(jdbcString, jdbcUsername, jdbcPassword);
-
-        } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        }
-        String rawMaterials = "{}";
-        try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("select name, amount, unit  from RawMaterials");
-            rawMaterials = toJson(preparedStatement.executeQuery(), "raw-materials");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        System.out.println(rawMaterials);
-    }
 
     public String getCookies(Request req, Response res) {
         String cookies = "{}";
@@ -108,7 +88,11 @@ public class Database {
     public String getRecipes(Request req, Response res) {
         String recepies = "{}";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select cookie_name, raw_material, amount, unit from Recipes order by cookie_name");
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "select cookie_name, raw_material, Recipes.amount, unit from Recipes" +
+                            " join RawMaterials RM on Recipes.raw_material = RM.name " +
+                            "order by cookie_name"
+            );
             recepies = toJson(preparedStatement.executeQuery(), "recipes");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -245,8 +229,8 @@ public class Database {
         try {
             String sql = "INSERT INTO Pallets(prod_date, blocked, location, cookie_name) VALUES (?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(sql);
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			String today = formatter.format(new Date());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String today = formatter.format(new Date());
             ps.setString(1, today);
             ps.setBoolean(2, false);
             ps.setString(3, "Krusty");
