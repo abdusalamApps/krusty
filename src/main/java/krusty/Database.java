@@ -109,10 +109,11 @@ public class Database {
 
         try {
             StringBuilder sb = new StringBuilder();
-            sb.append("SELECT pallet_id AS id, cookie_name AS cookie, prod_date AS production_date, IF (blocked = 1, 'yes', 'no') AS blocked");
+            sb.append("SELECT pallet_id AS id, cookie_name AS cookie, prod_date AS production_date, customer_name as customer, IF (blocked = 1, 'yes', 'no') AS blocked");
             sb.append(" FROM Pallets ");
 
 
+            // Building the query
             Map<String, String[]> params = req.queryMap().toMap();
             Iterator<String> paramIterator = params.keySet().iterator();
             if (supportedFilters.keySet().stream().anyMatch(params.keySet()::contains))
@@ -125,10 +126,12 @@ public class Database {
                 if (paramIterator.hasNext()) sb.append(" and ");
 
             }
-            sb.append("ORDER BY prod_date DESC");
+            sb.append(" LEFT JOIN Orders on Orders.order_id=Pallets.order_id");
+            sb.append(" ORDER BY prod_date DESC");
 
             PreparedStatement ps = connection.prepareStatement(sb.toString());
 
+            //Setting the query-parameters
             paramIterator = params.keySet().iterator();
             int count = 1;
             while (paramIterator.hasNext()) {
